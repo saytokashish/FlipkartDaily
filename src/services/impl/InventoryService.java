@@ -6,13 +6,14 @@ import repositories.ItemRepo;
 import services.IInventoryService;
 import services.IItemService;
 import utilities.ObjectFactory;
+import utilities.exceptions.ItemDoesNotExistException;
 
 import java.util.List;
 
-public class InventoryService implements IInventoryService {
+public class InventoryService implements IInventoryService  {
     private final ItemRepo itemRepo= ItemRepo.getInstance();
     @Override
-    public void addInventory(String category, String brand, int quantity) {
+    public void addInventory (String category, String brand, int quantity) throws ItemDoesNotExistException{
         IItemService itemService = ObjectFactory.getItemService();
         ItemFilter filter = ObjectFactory.getItemFilterBuilder()
                 .brandList(List.of(brand))
@@ -20,6 +21,9 @@ public class InventoryService implements IInventoryService {
                 .build();
 
         List<Item> items = itemService.searchItem(filter);
+        if(items==null){
+            throw new ItemDoesNotExistException("Please add item first");
+        }
         for (Item item : items) {
             int updatedQuantity=item.getQuantity() + quantity;
             itemRepo.update(item.getId(),updatedQuantity);

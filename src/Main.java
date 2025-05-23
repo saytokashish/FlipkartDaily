@@ -3,6 +3,9 @@ import models.ItemFilter;
 import services.IInventoryService;
 import services.IItemService;
 import utilities.ObjectFactory;
+import utilities.exceptions.ItemAlreadyExistException;
+import utilities.exceptions.ItemDoesNotExistException;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -38,8 +41,12 @@ public class Main {
                     int price = sc.nextInt();
 
                     Item item = ObjectFactory.getItem(brand,category,price);
-                    iItemService.addItem(item);
-                    System.out.println("Item added successfully.");
+                    try{
+                        iItemService.addItem(item);
+                        System.out.println("Item added successfully.");
+                    }catch (ItemAlreadyExistException e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 2:
@@ -49,8 +56,12 @@ public class Main {
                     String invCategory = sc.nextLine();
                     System.out.print("Enter quantity to add: ");
                     int addQuantity = sc.nextInt();
-
-                    iInventoryService.addInventory(invCategory, invBrand, addQuantity);
+                    try {
+                        iInventoryService.addInventory(invCategory, invBrand, addQuantity);
+                        System.out.println("Inventory added successfully.");
+                    }catch (ItemDoesNotExistException e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
 
                 case 3:

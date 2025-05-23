@@ -5,6 +5,9 @@ import models.ItemFilter;
 import models.enums.Order;
 import repositories.ItemRepo;
 import services.IItemService;
+import utilities.ObjectFactory;
+import utilities.exceptions.ItemAlreadyExistException;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +16,13 @@ public class ItemService implements IItemService {
     private ItemRepo itemRepo = ItemRepo.getInstance();
 
     @Override
-    public void addItem(Item item) {
+    public void addItem(Item item) throws ItemAlreadyExistException {
+        ItemFilter filter = ObjectFactory.getItemFilterBuilder()
+                .brandList(List.of(item.getBrand()))
+                .categoryList(List.of(item.getCategory()))
+                .build();
+        if(this.searchItem(filter)!=null)
+            throw new ItemAlreadyExistException("Item already exists");
         itemRepo.addItem(item);
     }
 
