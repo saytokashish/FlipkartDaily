@@ -79,12 +79,16 @@ public class Main {
                     }
 
                     System.out.print("Enter price from (or press Enter to skip): ");
-                    Integer priceFrom = sc.nextInt();
-
+                    String priceFromInput=sc.nextLine();
+                    Integer priceFrom=null;
+                    if(!priceFromInput.isBlank())
+                        priceFrom = Integer.parseInt(priceFromInput);
 
                     System.out.print("Enter price to (or press Enter to skip): ");
-                    Integer priceTo = sc.nextInt();
-
+                    String priceToInput=sc.nextLine();
+                    Integer priceTo=null;
+                    if(!priceToInput.isBlank())
+                        priceTo = Integer.parseInt(priceToInput);
 
                     System.out.print("Enter order by field (price/quantity/brand etc) or press Enter to skip: ");
                     String orderByField = sc.nextLine();
