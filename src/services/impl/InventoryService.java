@@ -21,12 +21,13 @@ public class InventoryService implements IInventoryService  {
                 .build();
 
         List<Item> items = itemService.searchItem(filter);
-        if(items==null){
+        if(items.isEmpty()){
             throw new ItemDoesNotExistException("Please add item first");
         }
         for (Item item : items) {
             int updatedQuantity=item.getQuantity() + quantity;
-            itemRepo.update(item.getId(),updatedQuantity);
+            item.setQuantity(updatedQuantity);
+            itemRepo.update(item);
         }
     }
 

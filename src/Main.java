@@ -17,6 +17,19 @@ public class Main {
         IItemService iItemService=ObjectFactory.getItemService();
         IInventoryService iInventoryService = ObjectFactory.getInventoryService();
 
+        try{
+            iItemService.addItem(ObjectFactory.getItem("Amul","Milk", 100));
+            iItemService.addItem(ObjectFactory.getItem("Amul","Curd", 20));
+            iItemService.addItem(ObjectFactory.getItem("Nestle","Milk", 30));
+            iItemService.addItem(ObjectFactory.getItem("Nestle","Curd", 40));
+            iInventoryService.addInventory("Milk","Amul",20);
+            iInventoryService.addInventory("Milk","Nestle",30);
+            iInventoryService.addInventory("Milk","Amul",40);
+            iInventoryService.addInventory("Curd","Amul",20);
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
         Scanner sc = new Scanner(System.in);
         int choice;
 
@@ -58,7 +71,7 @@ public class Main {
                     int addQuantity = sc.nextInt();
                     try {
                         iInventoryService.addInventory(invCategory, invBrand, addQuantity);
-                        System.out.println("Inventory added successfully.");
+                        System.out.println("Inventory added2 successfully.");
                     }catch (ItemDoesNotExistException e){
                         System.out.println(e.getMessage());
                     }

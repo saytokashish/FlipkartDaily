@@ -21,7 +21,7 @@ public class ItemService implements IItemService {
                 .brandList(List.of(item.getBrand()))
                 .categoryList(List.of(item.getCategory()))
                 .build();
-        if(this.searchItem(filter)!=null)
+        if(!this.searchItem(filter).isEmpty())
             throw new ItemAlreadyExistException("Item already exists");
         itemRepo.addItem(item);
     }

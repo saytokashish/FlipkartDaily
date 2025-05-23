@@ -2,37 +2,33 @@ package repositories;
 
 import models.Item;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ItemRepo {
-    private List<Item> items;
+    private final static Map<Integer,Item> items=new HashMap<>();
 
     private static repositories.ItemRepo instance;
-    private ItemRepo() {
-        items=new ArrayList<>();
-    }
+    private ItemRepo() {}
     public static ItemRepo getInstance() {
         if (instance == null) {
-            instance = new repositories.ItemRepo();
+            instance = new ItemRepo();
         }
         return instance;
     }
 
     public void addItem(Item item) {
-        items.add(item);
+        items.put(item.getId(),item);
     }
 
     public List<Item> getItems() {
-        return items;
+        return new ArrayList<>(items.values());
     }
 
-    public void update(int id,int quantity){
-        for (Item item : items) {
-            if (item.getId() == id) {
-                item.setQuantity(quantity);
-                System.out.println("Item with id " + id + " updated successfully.");
-                return ;
-            }
+    public void update(Item item){
+        if(items.containsKey(item.getId())){
+            items.put(item.getId(),item);
         }
     }
 
