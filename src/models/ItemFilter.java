@@ -1,7 +1,6 @@
 package models;
 
 import models.enums.Order;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -69,15 +68,10 @@ public class ItemFilter {
 
     }
 
-    // Getters (optional if needed)
-    public List<String> getBrandList() { return brandList; }
-    public List<String> getCategoryList() { return categoryList; }
     public Function<Item, Comparable> getOrderBy() {
         return orderBy;
     }
     public Order getOrder() { return order; }
-    public Integer getPriceFrom() { return priceFrom; }
-    public Integer getPriceTo() { return priceTo; }
 
     @Override
     public String toString() {
@@ -107,7 +101,7 @@ public class ItemFilter {
             predicates.add(item -> item.getPrice() <= priceTo);
         }
 
-        // If you add new filter fields later, just extend here easily.
+        // we can add new filter predicates here
 
         return predicates;
     }
@@ -116,7 +110,7 @@ public class ItemFilter {
             case "price": return Item::getPrice;
             case "quantity": return Item::getQuantity;
             case "id": return Item::getId;
-            // add new fields here easily
+            // we can add new orderByFields here
             default: return null;
         }
     }

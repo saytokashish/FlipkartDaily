@@ -2,11 +2,7 @@ import models.Item;
 import models.ItemFilter;
 import services.IInventoryService;
 import services.IItemService;
-import services.impl.InventoryService;
-import services.impl.ItemService;
 import utilities.ObjectFactory;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -106,7 +102,7 @@ public class Main {
                     }
 
 
-                    ItemFilter filter = new ItemFilter.Builder()
+                    ItemFilter filter = ObjectFactory.getItemFilterBuilder()
                             .brandList(searchBrands)
                             .categoryList(searchCategory)
                             .priceFrom(priceFrom)
@@ -139,5 +135,4 @@ public class Main {
             }
         } while (choice != 0);
     }
-
 }

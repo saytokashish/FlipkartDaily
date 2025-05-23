@@ -4,6 +4,8 @@ import models.Item;
 import models.ItemFilter;
 import repositories.ItemRepo;
 import services.IInventoryService;
+import services.IItemService;
+import utilities.ObjectFactory;
 
 import java.util.List;
 
@@ -11,8 +13,8 @@ public class InventoryService implements IInventoryService {
     private final ItemRepo itemRepo= ItemRepo.getInstance();
     @Override
     public void addInventory(String category, String brand, int quantity) {
-        ItemService itemService = new ItemService();
-        ItemFilter filter = new ItemFilter.Builder()
+        IItemService itemService = ObjectFactory.getItemService();
+        ItemFilter filter = ObjectFactory.getItemFilterBuilder()
                 .brandList(List.of(brand))
                 .categoryList(List.of(category))
                 .build();
@@ -22,11 +24,12 @@ public class InventoryService implements IInventoryService {
             int updatedQuantity=item.getQuantity() + quantity;
             itemRepo.update(item.getId(),updatedQuantity);
         }
-
     }
 
     @Override
     public void printInventories() {
-        itemRepo.printInventories();
+        for (Item item : itemRepo.getItems()) {
+            System.out.println("Category: " + item.getCategory() + ", Brand: " + item.getBrand() + ", Quantity: " + item.getQuantity());
+        }
     }
 }

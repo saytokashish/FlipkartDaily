@@ -1,6 +1,7 @@
 package utilities;
 
 import models.Item;
+import models.ItemFilter;
 import services.IInventoryService;
 import services.IItemService;
 import services.impl.InventoryService;
@@ -19,6 +20,9 @@ public class ObjectFactory {
     public static Item getItem(String brand, String category, int price){
         return new Item(brand, category, price);
     }
-    // In future, you can add more services here
+
+    public static ItemFilter.Builder getItemFilterBuilder(){
+        return new ItemFilter.Builder();
+    }
 }
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 public class ItemRepo {
     private List<Item> items;
+
     private static repositories.ItemRepo instance;
     private ItemRepo() {
         items=new ArrayList<>();
@@ -19,12 +20,6 @@ public class ItemRepo {
 
     public void addItem(Item item) {
         items.add(item);
-    }
-
-    public void printInventories() {
-        for (Item item : items) {
-            System.out.println("Category: " + item.getCategory() + ", Brand: " + item.getBrand() + ", Quantity: " + item.getQuantity());
-        }
     }
 
     public List<Item> getItems() {
