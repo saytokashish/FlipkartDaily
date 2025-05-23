@@ -89,10 +89,10 @@ public class ItemFilter {
         List<Predicate<Item>> predicates = new ArrayList<>();
 
         if (brandList != null && !brandList.isEmpty()) {
-            predicates.add(item -> brandList.contains(item.getBrand()));
+            predicates.add(item -> brandList.stream().anyMatch(b -> b.equalsIgnoreCase(item.getBrand())));
         }
         if (categoryList != null && !categoryList.isEmpty()) {
-            predicates.add(item -> categoryList.contains(item.getCategory()));
+            predicates.add(item -> categoryList.stream().anyMatch(b -> b.equalsIgnoreCase(item.getCategory())));
         }
         if (priceFrom != null) {
             predicates.add(item -> item.getPrice() >= priceFrom);
