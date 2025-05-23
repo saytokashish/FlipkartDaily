@@ -9,12 +9,11 @@ public class Item {
 
     private int quantity;
 
-    public Item(int price, String brand, String category, int quantity) {
+    public Item(String brand, String category, int price) {
         this.id = getNextId();
         this.price = price;
         this.brand = brand;
         this.category = category;
-        this.quantity = quantity;
     }
 
     private int getNextId(){

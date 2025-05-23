@@ -4,6 +4,7 @@ import services.IInventoryService;
 import services.IItemService;
 import services.impl.InventoryService;
 import services.impl.ItemService;
+import utilities.ObjectFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,8 +15,8 @@ import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        IItemService iItemService=new ItemService();
-        IInventoryService iInventoryService = new InventoryService();
+        IItemService iItemService=ObjectFactory.getItemService();
+        IInventoryService iInventoryService = ObjectFactory.getInventoryService();
 
         Scanner sc = new Scanner(System.in);
         int choice;
@@ -33,26 +34,23 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    System.out.print("Enter price: ");
-                    int price = sc.nextInt();
-                    sc.nextLine();
                     System.out.print("Enter brand: ");
                     String brand = sc.nextLine();
                     System.out.print("Enter category: ");
                     String category = sc.nextLine();
-                    System.out.print("Enter quantity: ");
-                    int quantity = sc.nextInt();
+                    System.out.print("Enter price: ");
+                    int price = sc.nextInt();
 
-                    Item item = new Item(price, brand, category, quantity);
+                    Item item = ObjectFactory.getItem(brand,category,price);
                     iItemService.addItem(item);
                     System.out.println("Item added successfully.");
                     break;
 
                 case 2:
-                    System.out.print("Enter category: ");
-                    String invCategory = sc.nextLine();
                     System.out.print("Enter brand: ");
                     String invBrand = sc.nextLine();
+                    System.out.print("Enter category: ");
+                    String invCategory = sc.nextLine();
                     System.out.print("Enter quantity to add: ");
                     int addQuantity = sc.nextInt();
 
@@ -85,20 +83,14 @@ public class Main {
                     }
 
                     System.out.print("Enter price from (or press Enter to skip): ");
-                    String priceFromInput = sc.nextLine();
-                    Integer priceFrom = null;
-                    if (!priceFromInput.trim().isEmpty()) {
-                        priceFrom = Integer.parseInt(priceFromInput);
-                    }
+                    Integer priceFrom = sc.nextInt();
+
 
                     System.out.print("Enter price to (or press Enter to skip): ");
-                    String priceToInput = sc.nextLine();
-                    Integer priceTo = null;
-                    if (!priceToInput.trim().isEmpty()) {
-                        priceTo = Integer.parseInt(priceToInput);
-                    }
+                    Integer priceTo = sc.nextInt();
 
-                    System.out.print("Enter order by field (price/quantity) or press Enter to skip: ");
+
+                    System.out.print("Enter order by field (price/quantity/brand etc) or press Enter to skip: ");
                     String orderByField = sc.nextLine();
                     Function<Item, Comparable> orderByFunction = ItemFilter.getOrderByFunction(orderByField);
 
